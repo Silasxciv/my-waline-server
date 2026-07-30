@@ -1,12 +1,15 @@
-{
-  "name": "@waline-server",
-  "version": "1.0.0",
-  "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
+import Waline from '@waline/vercel';
+
+Waline({
+  // 显式指定存储类型为 postgres
+  type: 'postgres',
+  // 如果环境变量里有 PG_DB_URL 则使用，没有则提取单独的变量
+  db: process.env.PG_DB_URL || {
+    host: process.env.PG_HOST,
+    port: process.env.PG_PORT || 5432,
+    user: process.env.PG_USER,
+    password: process.env.PG_PASSWORD,
+    database: process.env.PG_DB,
   },
-  "dependencies": {
-    "@waline/vercel": "latest"
-  }
-}
+  port: process.env.PORT || 8360,
+});
