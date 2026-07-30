@@ -1,15 +1,12 @@
 import Waline from '@waline/vercel/vanilla.js';
 
+// 显式将环境变量绑定到 process.env，确保底层 pg 驱动无缝读取
+const dbUrl = process.env.POSTGRES_URL || process.env.PG_DB_URL;
+
 Waline({
-  // 显式指定使用 postgres 数据库
   type: 'postgres',
-  
-  // 直接读取你的 Supabase 连接串
-  db: process.env.POSTGRES_URL || process.env.PG_DB_URL,
-  
-  // JWT 密钥
+  db: dbUrl,
+  pgDbUrl: dbUrl,
   jwtSecret: process.env.JWT_SECRET || 'waline_secret_key',
-  
-  // 监听端口
   port: process.env.PORT || 8360,
 });
