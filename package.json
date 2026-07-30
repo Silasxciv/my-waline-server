@@ -7,7 +7,6 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "@waline/vercel": "latest",
-    "pg": "^8.11.0"
+    "@waline/server": "^3.0.0"
   }
 }
