@@ -1,11 +1,13 @@
 {
   "name": "waline-server",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "@waline/vercel": "latest"
+    "@waline/vercel": "latest",
+    "pg": "^8.11.0"
   }
 }
