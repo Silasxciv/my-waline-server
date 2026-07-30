@@ -1,16 +1,15 @@
-// 1. 先注入环境变量，阻止 config.js 报错
-process.env.DB_TYPE = 'postgres';
-process.env.SQL_TYPE = 'postgres';
+import Waline from '@waline/vercel/vanilla.js';
 
-if (process.env.PG_DB_URL) {
-  process.env.POSTGRES_URL = process.env.PG_DB_URL;
-  process.env.WALINE_DB_URL = process.env.PG_DB_URL;
-}
-
-// 2. 使用 require 导入（千万不要用 import 关键字）
-const Waline = require('@waline/vercel');
-
-// 3. 启动 Waline
 Waline({
+  // 显式指定使用 postgres 数据库
+  type: 'postgres',
+  
+  // 直接读取你的 Supabase 连接串
+  db: process.env.POSTGRES_URL || process.env.PG_DB_URL,
+  
+  // JWT 密钥
+  jwtSecret: process.env.JWT_SECRET || 'waline_secret_key',
+  
+  // 监听端口
   port: process.env.PORT || 8360,
 });
