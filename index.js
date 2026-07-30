@@ -1,11 +1,18 @@
 import Waline from '@waline/vercel';
 
-// 强制设置环境变量，确保 Waline 底层能感知 DB 配置
+// 1. 强制设定数据库类型为 postgres
 process.env.DB_TYPE = 'postgres';
 
+// 2. 补全 Supabase/PostgreSQL 连接变量
+if (process.env.PG_DB_URL) {
+  process.env.POSTGRES_URL = process.env.PG_DB_URL;
+  process.env.WALINE_DB_URL = process.env.PG_DB_URL;
+}
+
+// 3. 启动 Waline
 Waline({
+  env: process.env,
   type: 'postgres',
-  pgDbUrl: process.env.PG_DB_URL,
-  jwtSecret: process.env.JWT_SECRET || 'waline_secret_key',
+  dbUrl: process.env.PG_DB_URL,
   port: process.env.PORT || 8360,
 });
