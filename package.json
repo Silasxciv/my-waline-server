@@ -7,6 +7,6 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "@waline/server": "npm:waline@latest"
+    "waline": "^3.0.0"
   }
 }
