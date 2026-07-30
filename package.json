@@ -1,13 +1,18 @@
-{
-  "name": "waline-server",
-  "version": "1.0.0",
-  "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "dependencies": {
-    "@waline/vercel": "latest",
-    "pg": "^8.11.0"
-  }
+import Waline from '@waline/vercel';
+
+// 1. 强制设定数据库类型为 postgres
+process.env.DB_TYPE = 'postgres';
+
+// 2. 如果填了 PG_DB_URL，确保同步给 POSTGRES_URL 和 WALINE_DB_URL 等所有可能的备用变量
+if (process.env.PG_DB_URL) {
+  process.env.POSTGRES_URL = process.env.PG_DB_URL;
+  process.env.WALINE_DB_URL = process.env.PG_DB_URL;
 }
+
+// 3. 启动 Waline
+Waline({
+  env: process.env,
+  type: 'postgres',
+  dbUrl: process.env.PG_DB_URL,
+  port: process.env.PORT || 8360,
+});
