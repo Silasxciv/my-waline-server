@@ -7,6 +7,6 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "@waline/vercel": "^3.0.0"
+    "@waline/vercel": "latest"
   }
 }
